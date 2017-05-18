@@ -4,7 +4,32 @@
 	<meta charset="UTF-8">
 	<title>主页</title>
 	<script type="text/javascript">
-		
+		var last_btn = document.getElementById("last");
+		var next_btn = document.getElementById("next");
+		var news = new Array("img/news/news01.jpg", "img/news/news02.jpg", "img/news/news03.jpg", "img/news/news04.jpg", "img/news/news05.jpg", "img/news/news06.jpg", "img/news/news07.jpg", "img/news/news08.jpg", "img/news/news09.jpg");
+		var count = 0;
+		function playLast(){
+			var flag = news[0];
+			for(var i=1; i < news.length; i++){
+				news[i-1] = news[i];
+			}
+			news[news.length-1] = flag;
+			setImgSrc();
+		}
+		function playNext(){
+			var flag = news[news.length-1];
+			for(var i = news.length-2; i >= 0; i--){
+				news[i+1] = news[i];
+			}
+			news[0] = flag;
+			setImgSrc();
+		}
+		function setImgSrc(){
+			document.getElementById("news_one").src = news[0];
+			document.getElementById("news_two").src = news[1];
+			document.getElementById("news_three").src = news[2];
+			document.getElementById("news_four").src = news[3];
+		}
 	</script>
 	<style type="text/css">
 		body{
@@ -102,6 +127,11 @@
 		a{
 			color: #00a381;
 		}
+		#news_one:hover, #news_one:focus,#news_two:hover, #news_two:focus,#news_three:hover, #news_three:focus,#news_four:hover, #news_four:focus{
+        border: 10px solid #fff;
+        /*过渡*/
+        -webkit-transition: box-shadow .5s;
+    }
 	</style>
 </head>
 <body>
@@ -121,12 +151,12 @@
 </div>
 <h2>—————————— 本周推荐 ——————————</h2>
 <div id="show_news">
-	<div id="news"><img src="img/btn/last.png" id="last"></div>
-	<div id="news"><img src="img/news/news01.jpg" alt=""></div>
-	<div id="news"><img src="img/news/news02.jpg" alt=""></div>
-	<div id="news"><img src="img/news/news03.jpg" alt=""></div>
-	<div id="news"><img src="img/news/news04.jpg" alt=""></div>
-	<div id="news"><img src="img/btn/next.png" id="next"></div>
+	<div id="news"><img src="img/btn/last.png" id="last" onclick="playLast()" onmousedown="this.src='img/btn/last_down.png'" onmouseup="this.src='img/btn/last.png'"></div>
+	<div id="news"><img src="img/news/news01.jpg" alt="" id="news_one"></div>
+	<div id="news"><img src="img/news/news02.jpg" alt="" id="news_two"></div>
+	<div id="news"><img src="img/news/news03.jpg" alt="" id="news_three"></div>
+	<div id="news"><img src="img/news/news04.jpg" alt="" id="news_four"></div>
+	<div id="news"><img src="img/btn/next.png" id="next" onclick="playNext()" onmousedown="this.src='img/btn/next_down.png'" onmouseup="this.src='img/btn/next.png'"></div>
 </div>
 </div>
 <div id="show_goods">
