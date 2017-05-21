@@ -4,11 +4,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>GT-bathroom</title>
 <script type="text/javascript">
+	//用于存放新品本周推荐图片
 	var news = new Array("img/news/news01.jpg", "img/news/news02.jpg",
 			"img/news/news03.jpg", "img/news/news04.jpg",
 			"img/news/news05.jpg", "img/news/news06.jpg",
 			"img/news/news07.jpg", "img/news/news08.jpg", "img/news/news09.jpg");
+	//用于存放轮播图
+	var slideshows = new Array("url(img/bg/01.jpg)", "url(img/bg/02.jpg)", "url(img/bg/03.jpg)");
+	//获得切换轮播图片按钮组，其实不是按钮，是li
+	var checks = document.getElementsByName("check");
 	var count = 0;
+	//自动切换轮播图
+	window.onload = function(){
+		setInterval("autoSwitch()",5000);
+	}
+	//用于本周推荐切换
 	function playLast() {
 		var flag = news[0];
 		for (var i = 1; i < news.length; i++) {
@@ -25,25 +35,40 @@
 		news[0] = flag;
 		setImgSrc();
 	}
+	//设置本周推荐图片
 	function setImgSrc() {
 		document.getElementById("news_one").src = news[0];
 		document.getElementById("news_two").src = news[1];
 		document.getElementById("news_three").src = news[2];
 		document.getElementById("news_four").src = news[3];
 	}
-	var checks = document.getElementsByName("check");
+	//轮播图切换
 	function switchBg(check){
 		for (var i = checks.length - 1; i >= 0; i--) {
 			checks[i].src = "img/btn/switch_down.png"
 		}
 		check.src = "img/btn/switch.png";
 		if (check.id == 1) {
-			document.getElementById("show_photo").style.background="url(img/bg/01.jpg)";
+			document.getElementById("show_photo").style.background = slideshows[0];
+			count = 0;
 		}else if (check.id == 2) {
-			document.getElementById("show_photo").style.background="url(img/bg/02.jpg)";
+			document.getElementById("show_photo").style.background = slideshows[1];
+			count = 1;
 		}else{
-			document.getElementById("show_photo").style.background="url(img/bg/03.jpg)";
+			document.getElementById("show_photo").style.background = slideshows[2];
+			count = 2;
 		}
+	}
+	function autoSwitch(){
+		count++;
+		if (count > 2) {
+			count = 0;
+		}
+		document.getElementById("show_photo").style.background = slideshows[count];
+		for (var i = checks.length - 1; i >= 0; i--) {
+			checks[i].src = "img/btn/switch_down.png"
+		}
+		checks[count].src = "img/btn/switch.png";
 	}
 	function sendData(){
 		var request;
@@ -62,6 +87,7 @@
 	}
 </script>
 <style type="text/css">
+/*大体上按照自上向下*/
 body {
 	/*设置内外边距为0，即与浏览器边框无界限*/
 	margin: 0px;
@@ -69,7 +95,7 @@ body {
 	text-align: center;
 	background: #fff;
 }
-/*展示图片div*/
+/*图片轮播div*/
 #show_photo {
 	margin: auto;
 	width: 100%;
@@ -88,22 +114,22 @@ body {
 	background: #00a381;
 	box-shadow: 5px 5px 33px #454545;
 }
-#checkbox{
+#carousel_btn_group{
 	position: absolute;
 	bottom: 0px;
 	width: 100%;
 }
-#checkbox_li{
+#carousel_btn_group_li{
 	display: inline;
     
 }
-#bar_ul,#checkbox_ul{
+#navigation_bar_ul,#carousel_btn_group_ul{
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 }
-#bar_li {
+#navigation_bar_li {
 	/*table中单独显示*/
 	display: table-cell;
 }
@@ -132,7 +158,8 @@ body {
 h2 {
 	margin-top: 50px;
 }
-
+/*-------------------------------------------------------------------------------------------------------------------------*/
+/*本周推荐*/
 #show_news {
 	margin:0 auto;
 	height: 250px;
@@ -169,6 +196,7 @@ a {
         /*过渡*/
         -webkit-transition: box-shadow .3s;
 }
+/*-----------------------------------------------------------------------------------------------------------------------------*/
 /*每一块*/
 #type{
 	margin: 0 auto;
@@ -210,22 +238,22 @@ td{
 	<div id="show_photo">
 		<div id="navigation_bar">
 			<form action="">
-				<ul id="bar_ul">
-					<li id="bar_li"><a href="#home" id="navigation_link" onclick="sendData()">首页</a></li>
-					<li id="bar_li"><a href="#news" id="navigation_link">卧室用品</a></li>
-					<li id="bar_li"><a href="#contact" id="navigation_link">客厅用品</a></li>
-					<li id="bar_li"><a href="#about" id="navigation_link">厨房用品</a></li>
-					<li id="bar_li"><a href="#about" id="navigation_link">餐厅用品</a></li>
-					<li id="bar_li"><a href="#about" id="navigation_link">浴室用品</a></li>
-					<li id="bar_li"><a href="#about" id="navigation_link">装饰品</a></li>
+				<ul id="navigation_bar_ul">
+					<li id="navigation_bar_li"><a href="#home" id="navigation_link" onclick="sendData()">首页</a></li>
+					<li id="navigation_bar_li"><a href="#news" id="navigation_link">卧室用品</a></li>
+					<li id="navigation_bar_li"><a href="#contact" id="navigation_link">客厅用品</a></li>
+					<li id="navigation_bar_li"><a href="#about" id="navigation_link">厨房用品</a></li>
+					<li id="navigation_bar_li"><a href="#about" id="navigation_link">餐厅用品</a></li>
+					<li id="navigation_bar_li"><a href="#about" id="navigation_link">浴室用品</a></li>
+					<li id="navigation_bar_li"><a href="#about" id="navigation_link">装饰品</a></li>
 				</ul>
 			</form>
 		</div>
-		<div id="checkbox">
-			<ul id="checkbox_ul">
-				<li id="checkbox_li"><img src="img/btn/switch.png" onclick="switchBg(this)" name="check" id="1"></li>
-				<li id="checkbox_li"><img src="img/btn/switch_down.png" onclick="switchBg(this)" name="check" id="2"></li>
-				<li id="checkbox_li"><img src="img/btn/switch_down.png"  onclick="switchBg(this)" name="check" id="3"></li>
+		<div id="carousel_btn_group">
+			<ul id="carousel_btn_group_ul">
+				<li id="carousel_btn_group_li"><img src="img/btn/switch.png" onclick="switchBg(this)" name="check" id="1"></li>
+				<li id="carousel_btn_group_li"><img src="img/btn/switch_down.png" onclick="switchBg(this)" name="check" id="2"></li>
+				<li id="carousel_btn_group_li"><img src="img/btn/switch_down.png"  onclick="switchBg(this)" name="check" id="3"></li>
 			</ul>
 		</div>
 	</div>
